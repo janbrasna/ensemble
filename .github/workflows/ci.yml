@@ -3,12 +3,8 @@ name: CI
 on:
     push:
         branches:
-            - main
+            - test
     pull_request:
-
-concurrency:
-    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: true
 
 permissions:
     contents: read
@@ -16,9 +12,8 @@ permissions:
 jobs:
     lint-and-test:
         name: Lint and test
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-26.04
         timeout-minutes: 10
-        if: github.repository == 'mozilla/ensemble'
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
@@ -38,9 +33,8 @@ jobs:
 
     e2e:
         name: End-to-end tests
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-26.04
         timeout-minutes: 20
-        if: github.repository == 'mozilla/ensemble'
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
